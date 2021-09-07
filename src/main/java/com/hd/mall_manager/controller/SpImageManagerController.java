@@ -71,4 +71,7 @@ public class SpImageManagerController {
         return new ResultVO(spImageManagerService.deleteByPrimaryKey(id));
     }
 
+
+    //可以新加替换接口
+
 }
