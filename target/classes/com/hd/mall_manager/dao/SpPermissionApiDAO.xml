@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hd.mall_manager.dao.SpPermissionApiDAO">
+  <resultMap id="BaseResultMap" type="com.hd.mall_manager.entity.SpPermissionApi">
+    <!--@mbg.generated-->
+    <!--@Table sp_permission_api-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ps_id" jdbcType="INTEGER" property="psId" />
+    <result column="ps_api_service" jdbcType="VARCHAR" property="psApiService" />
+    <result column="ps_api_action" jdbcType="VARCHAR" property="psApiAction" />
+    <result column="ps_api_path" jdbcType="VARCHAR" property="psApiPath" />
+    <result column="ps_api_order" jdbcType="INTEGER" property="psApiOrder" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, ps_id, ps_api_service, ps_api_action, ps_api_path, ps_api_order
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sp_permission_api
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from sp_permission_api
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hd.mall_manager.entity.SpPermissionApi" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_permission_api (ps_id, ps_api_service, ps_api_action, 
+      ps_api_path, ps_api_order)
+    values (#{psId,jdbcType=INTEGER}, #{psApiService,jdbcType=VARCHAR}, #{psApiAction,jdbcType=VARCHAR}, 
+      #{psApiPath,jdbcType=VARCHAR}, #{psApiOrder,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hd.mall_manager.entity.SpPermissionApi" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_permission_api
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="psId != null">
+        ps_id,
+      </if>
+      <if test="psApiService != null and psApiService != ''">
+        ps_api_service,
+      </if>
+      <if test="psApiAction != null and psApiAction != ''">
+        ps_api_action,
+      </if>
+      <if test="psApiPath != null and psApiPath != ''">
+        ps_api_path,
+      </if>
+      <if test="psApiOrder != null">
+        ps_api_order,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="psId != null">
+        #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="psApiService != null and psApiService != ''">
+        #{psApiService,jdbcType=VARCHAR},
+      </if>
+      <if test="psApiAction != null and psApiAction != ''">
+        #{psApiAction,jdbcType=VARCHAR},
+      </if>
+      <if test="psApiPath != null and psApiPath != ''">
+        #{psApiPath,jdbcType=VARCHAR},
+      </if>
+      <if test="psApiOrder != null">
+        #{psApiOrder,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hd.mall_manager.entity.SpPermissionApi">
+    <!--@mbg.generated-->
+    update sp_permission_api
+    <set>
+      <if test="psId != null">
+        ps_id = #{psId,jdbcType=INTEGER},
+      </if>
+      <if test="psApiService != null and psApiService != ''">
+        ps_api_service = #{psApiService,jdbcType=VARCHAR},
+      </if>
+      <if test="psApiAction != null and psApiAction != ''">
+        ps_api_action = #{psApiAction,jdbcType=VARCHAR},
+      </if>
+      <if test="psApiPath != null and psApiPath != ''">
+        ps_api_path = #{psApiPath,jdbcType=VARCHAR},
+      </if>
+      <if test="psApiOrder != null">
+        ps_api_order = #{psApiOrder,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hd.mall_manager.entity.SpPermissionApi">
+    <!--@mbg.generated-->
+    update sp_permission_api
+    set ps_id = #{psId,jdbcType=INTEGER},
+      ps_api_service = #{psApiService,jdbcType=VARCHAR},
+      ps_api_action = #{psApiAction,jdbcType=VARCHAR},
+      ps_api_path = #{psApiPath,jdbcType=VARCHAR},
+      ps_api_order = #{psApiOrder,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

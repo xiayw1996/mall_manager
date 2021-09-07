@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hd.mall_manager.dao.SpManagerDAO">
+  <resultMap id="BaseResultMap" type="com.hd.mall_manager.entity.SpManager">
+    <!--@mbg.generated-->
+    <!--@Table sp_manager-->
+    <id column="mg_id" jdbcType="INTEGER" property="mgId" />
+    <result column="mg_name" jdbcType="VARCHAR" property="mgName" />
+    <result column="mg_pwd" jdbcType="CHAR" property="mgPwd" />
+    <result column="mg_time" jdbcType="INTEGER" property="mgTime" />
+    <result column="role_id" jdbcType="TINYINT" property="roleId" />
+    <result column="mg_mobile" jdbcType="VARCHAR" property="mgMobile" />
+    <result column="mg_email" jdbcType="VARCHAR" property="mgEmail" />
+    <result column="mg_state" jdbcType="TINYINT" property="mgState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    mg_id, mg_name, mg_pwd, mg_time, role_id, mg_mobile, mg_email, mg_state, roleName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sp_manager
+    where mg_id = #{mgId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from sp_manager
+    where mg_id = #{mgId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="mg_id" keyProperty="mgId" parameterType="com.hd.mall_manager.entity.SpManager" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_manager (mg_name, mg_pwd, mg_time, 
+      role_id, mg_mobile, mg_email, 
+      mg_state)
+    values (#{mgName,jdbcType=VARCHAR}, #{mgPwd,jdbcType=CHAR}, #{mgTime,jdbcType=INTEGER}, 
+      #{roleId,jdbcType=TINYINT}, #{mgMobile,jdbcType=VARCHAR}, #{mgEmail,jdbcType=VARCHAR}, 
+      #{mgState,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="mg_id" keyProperty="mgId" parameterType="com.hd.mall_manager.entity.SpManager" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_manager
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mgName != null and mgName != ''">
+        mg_name,
+      </if>
+      <if test="mgPwd != null and mgPwd != ''">
+        mg_pwd,
+      </if>
+      <if test="mgTime != null">
+        mg_time,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="mgMobile != null and mgMobile != ''">
+        mg_mobile,
+      </if>
+      <if test="mgEmail != null and mgEmail != ''">
+        mg_email,
+      </if>
+      <if test="mgState != null">
+        mg_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mgName != null and mgName != ''">
+        #{mgName,jdbcType=VARCHAR},
+      </if>
+      <if test="mgPwd != null and mgPwd != ''">
+        #{mgPwd,jdbcType=CHAR},
+      </if>
+      <if test="mgTime != null">
+        #{mgTime,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=TINYINT},
+      </if>
+      <if test="mgMobile != null and mgMobile != ''">
+        #{mgMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mgEmail != null and mgEmail != ''">
+        #{mgEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="mgState != null">
+        #{mgState,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hd.mall_manager.entity.SpManager">
+    <!--@mbg.generated-->
+    update sp_manager
+    <set>
+      <if test="mgName != null and mgName != ''">
+        mg_name = #{mgName,jdbcType=VARCHAR},
+      </if>
+      <if test="mgPwd != null and mgPwd != ''">
+        mg_pwd = #{mgPwd,jdbcType=CHAR},
+      </if>
+      <if test="mgTime != null">
+        mg_time = #{mgTime,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=TINYINT},
+      </if>
+      <if test="mgMobile != null and mgMobile != ''">
+        mg_mobile = #{mgMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mgEmail != null and mgEmail != ''">
+        mg_email = #{mgEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="mgState != null">
+        mg_state = #{mgState,jdbcType=TINYINT},
+      </if>
+    </set>
+    where mg_id = #{mgId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hd.mall_manager.entity.SpManager">
+    <!--@mbg.generated-->
+    update sp_manager
+    set mg_name = #{mgName,jdbcType=VARCHAR},
+      mg_pwd = #{mgPwd,jdbcType=CHAR},
+      mg_time = #{mgTime,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=TINYINT},
+      mg_mobile = #{mgMobile,jdbcType=VARCHAR},
+      mg_email = #{mgEmail,jdbcType=VARCHAR},
+      mg_state = #{mgState,jdbcType=TINYINT}
+    where mg_id = #{mgId,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryByUserNameAndPwd" resultMap="BaseResultMap">
+    select * from sp_manager
+    where mg_name = #{username}
+    <if test="password != null and password != ''">
+      and mg_pwd = #{password}
+    </if>
+  </select>
+
+  <sql id="selectToPageSql">
+    from sp_manager sm
+    LEFT JOIN sp_role sr ON sr.role_id = sm.role_id
+    <where>
+      <if test="query != null and query != ''">
+        and mg_name like CONCAT('%',#{query},'%')
+      </if>
+    </where>
+  </sql>
+  <select id="selectToPageTotal" resultType="int">
+    select count(*)
+    <include refid="selectToPageSql" />
+  </select>
+  <select id="selectToPageList" resultMap="BaseResultMap">
+    SELECT sm.*,sr.role_name as roleName,FROM_UNIXTIME(sm.mg_time) as mgTime1
+    <include refid="selectToPageSql" />
+    order by sm.mg_id
+    limit #{pageData.start},#{pageData.length}
+  </select>
+
+  <select id="checkUserName" resultType="int">
+    select count(*) from sp_manager
+    where mg_name = #{username}
+  </select>
+
+  <select id="selectByRoleId" resultMap="BaseResultMap">
+    SELECT * from sp_manager WHERE role_id = #{roleId}
+  </select>
+</mapper>
