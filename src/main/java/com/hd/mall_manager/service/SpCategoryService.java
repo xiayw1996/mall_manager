@@ -1,0 +1,58 @@
+package com.hd.mall_manager.service;
+
+import com.hd.mall_manager.bean.PageData;
+import org.springframework.stereotype.Service;
+import javax.annotation.Resource;
+import com.hd.mall_manager.dao.SpCategoryDAO;
+import com.hd.mall_manager.entity.SpCategory;
+
+import java.util.List;
+
+@Service
+public class SpCategoryService{
+
+    @Resource
+    private SpCategoryDAO spCategoryDAO;
+
+    
+    public int deleteByPrimaryKey(Integer catId) {
+        return spCategoryDAO.deleteByPrimaryKey(catId);
+    }
+
+    
+    public int insert(SpCategory record) {
+        return spCategoryDAO.insert(record);
+    }
+
+    
+    public int insertSelective(SpCategory record) {
+        return spCategoryDAO.insertSelective(record);
+    }
+
+    
+    public SpCategory selectByPrimaryKey(Integer catId) {
+        return spCategoryDAO.selectByPrimaryKey(catId);
+    }
+
+    
+    public int updateByPrimaryKeySelective(SpCategory record) {
+        return spCategoryDAO.updateByPrimaryKeySelective(record);
+    }
+
+    
+    public int updateByPrimaryKey(SpCategory record) {
+        return spCategoryDAO.updateByPrimaryKey(record);
+    }
+
+
+    public List<SpCategory> selectAll(){
+        return spCategoryDAO.selectAll();
+    }
+
+    public PageData selectToPage(PageData pageData, String query) {
+        pageData.setRecordsTotal(spCategoryDAO.selectToPageTotal(query));
+        pageData.setPageData(spCategoryDAO.selectToPageList(pageData, query));
+        return pageData;
+    }
+
+}

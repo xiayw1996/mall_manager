@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hd.mall_manager.dao.SpUserDAO">
+  <resultMap id="BaseResultMap" type="com.hd.mall_manager.entity.SpUser">
+    <!--@mbg.generated-->
+    <!--@Table sp_user-->
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="qq_open_id" jdbcType="CHAR" property="qqOpenId" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="user_email_code" jdbcType="CHAR" property="userEmailCode" />
+    <result column="is_active" jdbcType="OTHER" property="isActive" />
+    <result column="user_sex" jdbcType="OTHER" property="userSex" />
+    <result column="user_qq" jdbcType="VARCHAR" property="userQq" />
+    <result column="user_tel" jdbcType="VARCHAR" property="userTel" />
+    <result column="user_xueli" jdbcType="OTHER" property="userXueli" />
+    <result column="user_hobby" jdbcType="VARCHAR" property="userHobby" />
+    <result column="user_introduce" jdbcType="LONGVARCHAR" property="userIntroduce" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="update_time" jdbcType="INTEGER" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    user_id, username, qq_open_id, `password`, user_email, user_email_code, is_active, 
+    user_sex, user_qq, user_tel, user_xueli, user_hobby, user_introduce, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sp_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from sp_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="com.hd.mall_manager.entity.SpUser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_user (username, qq_open_id, `password`, 
+      user_email, user_email_code, is_active, 
+      user_sex, user_qq, user_tel, 
+      user_xueli, user_hobby, user_introduce, 
+      create_time, update_time)
+    values (#{username,jdbcType=VARCHAR}, #{qqOpenId,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{userEmailCode,jdbcType=CHAR}, #{isActive,jdbcType=OTHER}, 
+      #{userSex,jdbcType=OTHER}, #{userQq,jdbcType=VARCHAR}, #{userTel,jdbcType=VARCHAR}, 
+      #{userXueli,jdbcType=OTHER}, #{userHobby,jdbcType=VARCHAR}, #{userIntroduce,jdbcType=LONGVARCHAR}, 
+      #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="user_id" keyProperty="userId" parameterType="com.hd.mall_manager.entity.SpUser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null and username != ''">
+        username,
+      </if>
+      <if test="qqOpenId != null and qqOpenId != ''">
+        qq_open_id,
+      </if>
+      <if test="password != null and password != ''">
+        `password`,
+      </if>
+      <if test="userEmail != null and userEmail != ''">
+        user_email,
+      </if>
+      <if test="userEmailCode != null and userEmailCode != ''">
+        user_email_code,
+      </if>
+      <if test="isActive != null">
+        is_active,
+      </if>
+      <if test="userSex != null">
+        user_sex,
+      </if>
+      <if test="userQq != null and userQq != ''">
+        user_qq,
+      </if>
+      <if test="userTel != null and userTel != ''">
+        user_tel,
+      </if>
+      <if test="userXueli != null">
+        user_xueli,
+      </if>
+      <if test="userHobby != null and userHobby != ''">
+        user_hobby,
+      </if>
+      <if test="userIntroduce != null and userIntroduce != ''">
+        user_introduce,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null and username != ''">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="qqOpenId != null and qqOpenId != ''">
+        #{qqOpenId,jdbcType=CHAR},
+      </if>
+      <if test="password != null and password != ''">
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="userEmail != null and userEmail != ''">
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailCode != null and userEmailCode != ''">
+        #{userEmailCode,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null">
+        #{isActive,jdbcType=OTHER},
+      </if>
+      <if test="userSex != null">
+        #{userSex,jdbcType=OTHER},
+      </if>
+      <if test="userQq != null and userQq != ''">
+        #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null and userTel != ''">
+        #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userXueli != null">
+        #{userXueli,jdbcType=OTHER},
+      </if>
+      <if test="userHobby != null and userHobby != ''">
+        #{userHobby,jdbcType=VARCHAR},
+      </if>
+      <if test="userIntroduce != null and userIntroduce != ''">
+        #{userIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hd.mall_manager.entity.SpUser">
+    <!--@mbg.generated-->
+    update sp_user
+    <set>
+      <if test="username != null and username != ''">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="qqOpenId != null and qqOpenId != ''">
+        qq_open_id = #{qqOpenId,jdbcType=CHAR},
+      </if>
+      <if test="password != null and password != ''">
+        `password` = #{password,jdbcType=CHAR},
+      </if>
+      <if test="userEmail != null and userEmail != ''">
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailCode != null and userEmailCode != ''">
+        user_email_code = #{userEmailCode,jdbcType=CHAR},
+      </if>
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=OTHER},
+      </if>
+      <if test="userSex != null">
+        user_sex = #{userSex,jdbcType=OTHER},
+      </if>
+      <if test="userQq != null and userQq != ''">
+        user_qq = #{userQq,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null and userTel != ''">
+        user_tel = #{userTel,jdbcType=VARCHAR},
+      </if>
+      <if test="userXueli != null">
+        user_xueli = #{userXueli,jdbcType=OTHER},
+      </if>
+      <if test="userHobby != null and userHobby != ''">
+        user_hobby = #{userHobby,jdbcType=VARCHAR},
+      </if>
+      <if test="userIntroduce != null and userIntroduce != ''">
+        user_introduce = #{userIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hd.mall_manager.entity.SpUser">
+    <!--@mbg.generated-->
+    update sp_user
+    set username = #{username,jdbcType=VARCHAR},
+      qq_open_id = #{qqOpenId,jdbcType=CHAR},
+      `password` = #{password,jdbcType=CHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_email_code = #{userEmailCode,jdbcType=CHAR},
+      is_active = #{isActive,jdbcType=OTHER},
+      user_sex = #{userSex,jdbcType=OTHER},
+      user_qq = #{userQq,jdbcType=VARCHAR},
+      user_tel = #{userTel,jdbcType=VARCHAR},
+      user_xueli = #{userXueli,jdbcType=OTHER},
+      user_hobby = #{userHobby,jdbcType=VARCHAR},
+      user_introduce = #{userIntroduce,jdbcType=LONGVARCHAR},
+      create_time = #{createTime,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

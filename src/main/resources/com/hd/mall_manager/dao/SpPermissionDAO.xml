@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hd.mall_manager.dao.SpPermissionDAO">
+  <resultMap id="BaseResultMap" type="com.hd.mall_manager.entity.SpPermission">
+    <!--@mbg.generated-->
+    <!--@Table sp_permission-->
+    <id column="ps_id" jdbcType="SMALLINT" property="psId" />
+    <result column="ps_name" jdbcType="VARCHAR" property="psName" />
+    <result column="ps_pid" jdbcType="SMALLINT" property="psPid" />
+    <result column="ps_c" jdbcType="VARCHAR" property="psC" />
+    <result column="ps_a" jdbcType="VARCHAR" property="psA" />
+    <result column="ps_level" jdbcType="OTHER" property="psLevel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    ps_id, ps_name, ps_pid, ps_c, ps_a, ps_level
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sp_permission
+    where ps_id = #{psId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    <!--@mbg.generated-->
+    delete from sp_permission
+    where ps_id = #{psId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" keyColumn="ps_id" keyProperty="psId" parameterType="com.hd.mall_manager.entity.SpPermission" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_permission (ps_name, ps_pid, ps_c, 
+      ps_a, ps_level)
+    values (#{psName,jdbcType=VARCHAR}, #{psPid,jdbcType=SMALLINT}, #{psC,jdbcType=VARCHAR}, 
+      #{psA,jdbcType=VARCHAR}, #{psLevel,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" keyColumn="ps_id" keyProperty="psId" parameterType="com.hd.mall_manager.entity.SpPermission" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="psName != null and psName != ''">
+        ps_name,
+      </if>
+      <if test="psPid != null">
+        ps_pid,
+      </if>
+      <if test="psC != null and psC != ''">
+        ps_c,
+      </if>
+      <if test="psA != null and psA != ''">
+        ps_a,
+      </if>
+      <if test="psLevel != null">
+        ps_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="psName != null and psName != ''">
+        #{psName,jdbcType=VARCHAR},
+      </if>
+      <if test="psPid != null">
+        #{psPid,jdbcType=SMALLINT},
+      </if>
+      <if test="psC != null and psC != ''">
+        #{psC,jdbcType=VARCHAR},
+      </if>
+      <if test="psA != null and psA != ''">
+        #{psA,jdbcType=VARCHAR},
+      </if>
+      <if test="psLevel != null">
+        #{psLevel,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hd.mall_manager.entity.SpPermission">
+    <!--@mbg.generated-->
+    update sp_permission
+    <set>
+      <if test="psName != null and psName != ''">
+        ps_name = #{psName,jdbcType=VARCHAR},
+      </if>
+      <if test="psPid != null">
+        ps_pid = #{psPid,jdbcType=SMALLINT},
+      </if>
+      <if test="psC != null and psC != ''">
+        ps_c = #{psC,jdbcType=VARCHAR},
+      </if>
+      <if test="psA != null and psA != ''">
+        ps_a = #{psA,jdbcType=VARCHAR},
+      </if>
+      <if test="psLevel != null">
+        ps_level = #{psLevel,jdbcType=OTHER},
+      </if>
+    </set>
+    where ps_id = #{psId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hd.mall_manager.entity.SpPermission">
+    <!--@mbg.generated-->
+    update sp_permission
+    set ps_name = #{psName,jdbcType=VARCHAR},
+      ps_pid = #{psPid,jdbcType=SMALLINT},
+      ps_c = #{psC,jdbcType=VARCHAR},
+      ps_a = #{psA,jdbcType=VARCHAR},
+      ps_level = #{psLevel,jdbcType=OTHER}
+    where ps_id = #{psId,jdbcType=SMALLINT}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT sp.*,spa.ps_api_path as psApiPath
+    FROM `sp_permission` sp
+    LEFT JOIN sp_permission_api spa ON spa.ps_id = sp.ps_id
+  </select>
+
+  <sql id="listJurSql">
+    SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(sr.ps_ids,',',help_topic_id+1),',',-1) as ps_ids
+    FROM mysql.help_topic h,sp_role sr
+    WHERE help_topic_id &lt; LENGTH(sr.ps_ids)-LENGTH(REPLACE(sr.ps_ids,',',''))+1
+    and sr.role_id = #{roleId}
+  </sql>
+  <select id="selectRight" resultMap="BaseResultMap">
+    select *
+    from sp_permission sp
+    inner join (
+     <include refid="listJurSql" />
+    ) srr on sp.ps_id = srr.ps_ids
+    where ps_pid = #{psId}
+    and ps_level = #{psLevel}
+  </select>
+
+  <select id="subIdList" resultType="short">
+    select * from sp_permission
+    where ps_pid = #{psId}
+  </select>
+
+  <select id="selectNotSubList" resultType="short">
+    select ps_id
+    from sp_permission sp
+    inner join (
+     <include refid="listJurSql" />
+    ) srr on sp.ps_id = srr.ps_ids
+    where ps_id NOT IN
+    <foreach close=")" collection="jList" item="jId" open="(" separator=",">
+      #{jId}
+    </foreach>
+  </select>
+
+  <select id="selectRightAll" resultMap="BaseResultMap">
+    select * from sp_permission
+    where ps_pid = #{psId}
+    and ps_level = #{psLevel}
+  </select>
+</mapper>

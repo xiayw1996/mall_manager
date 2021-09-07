@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hd.mall_manager.dao.SpOrderDAO">
+  <resultMap id="BaseResultMap" type="com.hd.mall_manager.entity.SpOrder">
+    <!--@mbg.generated-->
+    <!--@Table sp_order-->
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="order_number" jdbcType="VARCHAR" property="orderNumber" />
+    <result column="order_price" jdbcType="DECIMAL" property="orderPrice" />
+    <result column="order_pay" jdbcType="OTHER" property="orderPay" />
+    <result column="is_send" jdbcType="OTHER" property="isSend" />
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="order_fapiao_title" jdbcType="OTHER" property="orderFapiaoTitle" />
+    <result column="order_fapiao_company" jdbcType="VARCHAR" property="orderFapiaoCompany" />
+    <result column="order_fapiao_content" jdbcType="VARCHAR" property="orderFapiaoContent" />
+    <result column="consignee_addr" jdbcType="LONGVARCHAR" property="consigneeAddr" />
+    <result column="pay_status" jdbcType="OTHER" property="payStatus" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="update_time" jdbcType="INTEGER" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    order_id, user_id, order_number, order_price, order_pay, is_send, trade_no, order_fapiao_title, 
+    order_fapiao_company, order_fapiao_content, consignee_addr, pay_status, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sp_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from sp_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="order_id" keyProperty="orderId" parameterType="com.hd.mall_manager.entity.SpOrder" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_order (user_id, order_number, order_price, 
+      order_pay, is_send, trade_no, 
+      order_fapiao_title, order_fapiao_company, order_fapiao_content, 
+      consignee_addr, pay_status, create_time, 
+      update_time)
+    values (#{userId,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, #{orderPrice,jdbcType=DECIMAL}, 
+      #{orderPay,jdbcType=OTHER}, #{isSend,jdbcType=OTHER}, #{tradeNo,jdbcType=VARCHAR}, 
+      #{orderFapiaoTitle,jdbcType=OTHER}, #{orderFapiaoCompany,jdbcType=VARCHAR}, #{orderFapiaoContent,jdbcType=VARCHAR}, 
+      #{consigneeAddr,jdbcType=LONGVARCHAR}, #{payStatus,jdbcType=OTHER}, #{createTime,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="order_id" keyProperty="orderId" parameterType="com.hd.mall_manager.entity.SpOrder" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into sp_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="orderNumber != null and orderNumber != ''">
+        order_number,
+      </if>
+      <if test="orderPrice != null">
+        order_price,
+      </if>
+      <if test="orderPay != null">
+        order_pay,
+      </if>
+      <if test="isSend != null">
+        is_send,
+      </if>
+      <if test="tradeNo != null and tradeNo != ''">
+        trade_no,
+      </if>
+      <if test="orderFapiaoTitle != null">
+        order_fapiao_title,
+      </if>
+      <if test="orderFapiaoCompany != null and orderFapiaoCompany != ''">
+        order_fapiao_company,
+      </if>
+      <if test="orderFapiaoContent != null and orderFapiaoContent != ''">
+        order_fapiao_content,
+      </if>
+      <if test="consigneeAddr != null and consigneeAddr != ''">
+        consignee_addr,
+      </if>
+      <if test="payStatus != null">
+        pay_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null and orderNumber != ''">
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderPay != null">
+        #{orderPay,jdbcType=OTHER},
+      </if>
+      <if test="isSend != null">
+        #{isSend,jdbcType=OTHER},
+      </if>
+      <if test="tradeNo != null and tradeNo != ''">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFapiaoTitle != null">
+        #{orderFapiaoTitle,jdbcType=OTHER},
+      </if>
+      <if test="orderFapiaoCompany != null and orderFapiaoCompany != ''">
+        #{orderFapiaoCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFapiaoContent != null and orderFapiaoContent != ''">
+        #{orderFapiaoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeAddr != null and consigneeAddr != ''">
+        #{consigneeAddr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=OTHER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hd.mall_manager.entity.SpOrder">
+    <!--@mbg.generated-->
+    update sp_order
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null and orderNumber != ''">
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null">
+        order_price = #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderPay != null">
+        order_pay = #{orderPay,jdbcType=OTHER},
+      </if>
+      <if test="isSend != null">
+        is_send = #{isSend,jdbcType=OTHER},
+      </if>
+      <if test="tradeNo != null and tradeNo != ''">
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFapiaoTitle != null">
+        order_fapiao_title = #{orderFapiaoTitle,jdbcType=OTHER},
+      </if>
+      <if test="orderFapiaoCompany != null and orderFapiaoCompany != ''">
+        order_fapiao_company = #{orderFapiaoCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFapiaoContent != null and orderFapiaoContent != ''">
+        order_fapiao_content = #{orderFapiaoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeAddr != null and consigneeAddr != ''">
+        consignee_addr = #{consigneeAddr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="payStatus != null">
+        pay_status = #{payStatus,jdbcType=OTHER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hd.mall_manager.entity.SpOrder">
+    <!--@mbg.generated-->
+    update sp_order
+    set user_id = #{userId,jdbcType=INTEGER},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      order_price = #{orderPrice,jdbcType=DECIMAL},
+      order_pay = #{orderPay,jdbcType=OTHER},
+      is_send = #{isSend,jdbcType=OTHER},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      order_fapiao_title = #{orderFapiaoTitle,jdbcType=OTHER},
+      order_fapiao_company = #{orderFapiaoCompany,jdbcType=VARCHAR},
+      order_fapiao_content = #{orderFapiaoContent,jdbcType=VARCHAR},
+      consignee_addr = #{consigneeAddr,jdbcType=LONGVARCHAR},
+      pay_status = #{payStatus,jdbcType=OTHER},
+      create_time = #{createTime,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sp_order
+  </select>
+</mapper>
