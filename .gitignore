@@ -1,3 +1,4 @@
 /.idea/*
-/target/*
+#/target/*
 /catalina.base_IS_UNDEFINED/*
+/cacheFile/*
