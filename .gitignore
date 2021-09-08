@@ -2,3 +2,4 @@
 /target/*
 /catalina.base_IS_UNDEFINED/*
 /cacheFile/*
+/src/main/resources/static/*

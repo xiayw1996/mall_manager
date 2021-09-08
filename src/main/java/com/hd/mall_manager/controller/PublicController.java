@@ -66,6 +66,11 @@ public class PublicController {
         return new ResultVO(jo);
     }
 
+    @RequestMapping("/")
+    public String login1(){
+        return "redirect:index.html";
+    }
+
     /*@RequestMapping("/logout")
     @ResponseBody
     public ResultVO logout(HttpSession session){
@@ -84,11 +89,6 @@ public class PublicController {
             return new ResultVO(user);
         }
         return new ResultVO(session.getAttribute(Constant.SESSION_ACCOUNT_KEY));
-    }
-
-    @RequestMapping("/")
-    public String login1(){
-        return "redirect:index.html";
     }*/
 
 }

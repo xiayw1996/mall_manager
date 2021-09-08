@@ -2,7 +2,6 @@ package com.hd.mall_manager.controller;
 
 import com.hd.mall_manager.bean.ResultCode;
 import com.hd.mall_manager.bean.ResultVO;
-import com.hd.mall_manager.entity.SpImageManager;
 import com.hd.mall_manager.service.SpImageManagerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;

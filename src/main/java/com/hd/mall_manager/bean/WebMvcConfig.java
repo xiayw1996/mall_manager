@@ -28,13 +28,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				"/login.html",            //登录
 				"/login",
 				"/logout",
+				"/",
 				"/sim/photo/*",
 				"/**/*.html",            //html静态资源
 				"/**/*.js",              //js静态资源
 				"/**/*.css",             //css静态资源
 				"/**/*.woff",
 				"/**/*.ttf",
-				"/images/*"
+				"/images/*",
+				"/img/*",
+				"/**/*.ico",
+				"/**/*.map"
 		);
 	}
 
