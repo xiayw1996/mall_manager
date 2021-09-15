@@ -29,7 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				"/login",
 				"/logout",
 				"/",
-				"/sim/photo/*",
+				"/sim/photo/*",			 //图片访问的途径
 				"/**/*.html",            //html静态资源
 				"/**/*.js",              //js静态资源
 				"/**/*.css",             //css静态资源
