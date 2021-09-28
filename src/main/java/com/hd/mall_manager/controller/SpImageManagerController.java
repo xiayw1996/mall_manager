@@ -26,48 +26,64 @@ public class SpImageManagerController {
     @Value("${cacheFile.uploadPath}")
     private String uploadPath;
 
-    //查询全部
+    /**
+     * 查询所有记录
+     * @return
+     */
     @RequestMapping("/selectAll")
     public ResultVO selectAll() {
         return new ResultVO(spImageManagerService.selectAll());
     }
 
-    //图片上传
+    /**
+     * 图片上传
+     * @param userId    用户id
+     * @param file      文件
+     * @return
+     */
     @RequestMapping("/upload")
     public ResultVO upload(Integer userId,
                            @RequestParam(value = "file", required = false) MultipartFile file){
+        //用户不能为空
         if(userId == null){
             return new ResultVO(ResultCode.paramNullException);
         }
+        //文件不能为空
         if(file == null || file.isEmpty()){
             return new ResultVO(ResultCode.fileNotExistException);
         }
+        //调用上传方法
         spImageManagerService.upload(userId,file);
         return new ResultVO();
     }
 
-    //图片下载
+    /**
+     * 图片下载
+     * @param res   浏览器返回
+     * @param name  图片名称
+     * @throws IOException
+     */
     @RequestMapping("/download/{name}")
     public void download(HttpServletResponse res, @PathVariable("name") String name) throws IOException {
+        //获取图片路径
         String filePath = uploadPath + "/" + name;
+        //获取图片所有的byte
         byte[] bytes = Files.readAllBytes(Paths.get(filePath));
+        //设置返回的类型和返回头名称
         res.setContentType("application/octet-stream;charset=UTF-8");
         res.setHeader("Content-Disposition", "attachment; filename=" + new String(name.getBytes("UTF-8"), "ISO-8859-1"));
+        //将byte写进输出流
         res.getOutputStream().write(bytes);
     }
 
-    //图片预览
-    @RequestMapping("/photo/{name}")
-    public void photo(HttpServletResponse res, @PathVariable("name") String name) throws IOException {
-        String filePath = uploadPath + "/" + name;
-        byte[] bytes = Files.readAllBytes(Paths.get(filePath));
-        res.getOutputStream().write(bytes);
-    }
-
-    //删除
+    /**
+     * 根据id删除记录
+     * @param id
+     * @return
+     */
     @RequestMapping("/delete")
     public ResultVO delete(Integer id) {
-        return new ResultVO(spImageManagerService.deleteByPrimaryKey(id));
+        return new ResultVO(spImageManagerService.delete(id));
     }
 
 }

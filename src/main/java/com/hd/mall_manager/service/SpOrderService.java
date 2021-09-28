@@ -44,6 +44,10 @@ public class SpOrderService{
     }
 
 
+    /**
+     * 查询所有记录
+     * @return
+     */
     public List<SpOrder> selectAll() {
         return spOrderDAO.selectAll();
     }

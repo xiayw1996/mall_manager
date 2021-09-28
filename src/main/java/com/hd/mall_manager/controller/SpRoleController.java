@@ -1,5 +1,6 @@
 package com.hd.mall_manager.controller;
 
+import com.hd.mall_manager.bean.Constant;
 import com.hd.mall_manager.bean.ResultCode;
 import com.hd.mall_manager.bean.ResultVO;
 import com.hd.mall_manager.entity.SpRole;
@@ -34,7 +35,8 @@ public class SpRoleController {
      */
     @RequestMapping("/deleteRoleRight")
     public ResultVO deleteRoleRight(Short roleId,Short psId){
-        if (roleId == 30) {
+        //如果当前id是30（管理员）角色
+        if (roleId == Constant.roleId) {
             return new ResultVO(ResultCode.adminOperationRoleException);
         }
         return spRoleService.deleteRoleRight(roleId,psId);
@@ -48,7 +50,8 @@ public class SpRoleController {
      */
     @RequestMapping("/updateRoleRight")
     public ResultVO updateRoleRight(Short roleId, @RequestParam(name = "psIds",required = false) List<Short> psIds){
-        if (roleId == 30) {
+        //如果当前id是30（管理员）角色
+        if (roleId == Constant.roleId) {
             return new ResultVO(ResultCode.adminOperationRoleException);
         }
         return new ResultVO(spRoleService.updateRoleRight(roleId,psIds));
@@ -67,7 +70,8 @@ public class SpRoleController {
         if (record == null) {
             return new ResultVO(ResultCode.paramNullException);
         }
-        if (record.getRoleId() == 30) {
+        //如果当前id是30（管理员）角色
+        if (record.getRoleId() == Constant.roleId) {
             return new ResultVO(ResultCode.adminOperationRoleException);
         }
         return spRoleService.insertOrUpdate(record, 2);
@@ -75,7 +79,8 @@ public class SpRoleController {
 
     @RequestMapping("/delete")
     public ResultVO delete(Short roleId){
-        if (roleId == 30) {
+        //如果当前id是30（管理员）角色
+        if (roleId == Constant.roleId) {
             return new ResultVO(ResultCode.adminOperationRoleException);
         }
         return spRoleService.delete(roleId);

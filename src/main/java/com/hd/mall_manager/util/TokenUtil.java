@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class TokenUtil {
     //设置过期时间,3个小时
-    private static final long EXPIRE_DATE=30*60*60000;
+    private static final long EXPIRE_DATE=3*60*60000;
     //token秘钥
     private static final String TOKEN_SECRET = "ZCfasfhuaUUHufguGuwu2020BQWE";
 

@@ -45,10 +45,20 @@ public class SpCategoryService{
     }
 
 
+    /**
+     * 查询所有记录
+     * @return
+     */
     public List<SpCategory> selectAll(){
         return spCategoryDAO.selectAll();
     }
 
+    /**
+     * 分页查询
+     * @param pageData  分页组件
+     * @param query     查询条件
+     * @return
+     */
     public PageData selectToPage(PageData pageData, String query) {
         pageData.setRecordsTotal(spCategoryDAO.selectToPageTotal(query));
         pageData.setPageData(spCategoryDAO.selectToPageList(pageData, query));

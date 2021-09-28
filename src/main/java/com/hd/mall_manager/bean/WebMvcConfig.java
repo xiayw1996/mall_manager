@@ -1,5 +1,6 @@
 package com.hd.mall_manager.bean;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+	@Value("${cacheFile.uploadPath}")
+	private String uploadPath;
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
@@ -29,7 +32,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				"/login",
 				"/logout",
 				"/",
-				"/sim/photo/*",			 //图片访问的途径
+				"/"+uploadPath+"/*",	 //图片访问路径
 				"/**/*.html",            //html静态资源
 				"/**/*.js",              //js静态资源
 				"/**/*.css",             //css静态资源
@@ -38,7 +41,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				"/images/*",
 				"/img/*",
 				"/**/*.ico",
-				"/**/*.map"
+				"/**/*.map",
+				"/sp/selectAll"
 		);
 	}
 

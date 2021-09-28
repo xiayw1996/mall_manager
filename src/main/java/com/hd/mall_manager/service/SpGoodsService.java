@@ -50,6 +50,12 @@ public class SpGoodsService{
     }
 
 
+    /**
+     * 分页查询
+     * @param pageData  分页组件
+     * @param query     查询条件
+     * @return
+     */
     public PageData selectToPage(PageData pageData, String query) {
         pageData.setRecordsTotal(spGoodsDAO.selectToPageTotal(query));
         pageData.setPageData(spGoodsDAO.selectToPageList(pageData, query));

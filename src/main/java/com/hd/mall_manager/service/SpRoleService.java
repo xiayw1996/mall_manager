@@ -74,7 +74,8 @@ public class SpRoleService{
         //然后循环
         for (SpRole sr : srList){
             Short roleId = sr.getRoleId();
-            JSONArray ja1 = childrenList(roleId);
+            //JSONArray ja1 = childrenList(roleId);
+            JSONArray ja1 = childrenList1(roleId,(short)0,"0");
 
             JSONObject jo1 = new JSONObject();
             jo1.put("id",roleId);
@@ -86,6 +87,7 @@ public class SpRoleService{
         return ja;
     }
 
+    /*
     public JSONArray childrenList(Short roleId){
         JSONArray ja1 = new JSONArray();
         List<SpPermission> spList1 = spPermissionDAO.selectRight(roleId,(short) 0,"0");
@@ -120,6 +122,23 @@ public class SpRoleService{
         }
         return ja1;
     }
+     */
+
+    //另一种用递归的写法
+    public JSONArray childrenList1(Short roleId,Short psId, String psLevel){
+        JSONArray ja = new JSONArray();
+        List<SpPermission> spList = spPermissionDAO.selectRight(roleId,psId,psLevel);
+        for(SpPermission sp : spList) {
+            JSONArray ja1 = childrenList1(roleId, sp.getPsId(), Integer.parseInt(psLevel)+1+"");
+            JSONObject jo = new JSONObject();
+            jo.put("id",sp.getPsId());
+            jo.put("authName",sp.getPsName());
+            jo.put("path",null);
+            jo.put("children",ja1);
+            ja.add(jo);
+        }
+        return ja;
+    }
 
     public ResultVO deleteRoleRight(Short roleId,Short psId){
         List<Short> jList = new ArrayList<>();
@@ -131,13 +150,12 @@ public class SpRoleService{
         jList = spPermissionDAO.selectNotSubList(roleId,jList);
         //去除空格和中括号
         String jStr = StringUtils.strip(jList.toString(),"[]").replaceAll(" ","");
-        jStr = jStr + ",0";
 
         SpRole sr = spRoleDAO.selectByPrimaryKey(roleId);
         sr.setPsIds(jStr);
         spRoleDAO.updateByPrimaryKeySelective(sr);
 
-        return new ResultVO(childrenList(roleId));
+        return new ResultVO(childrenList1(roleId,(short)0,"0"));
     }
 
     //循环拼接所有下级
@@ -156,17 +174,14 @@ public class SpRoleService{
     public int updateRoleRight(Short roleId,List<Short> psIds){
         SpRole sr = spRoleDAO.selectByPrimaryKey(roleId);
         String psidsStr = StringUtils.strip(psIds.toString(),"[]").replaceAll(" ","");
-        psidsStr = psidsStr + ",0";
         sr.setPsIds(psidsStr);
         return spRoleDAO.updateByPrimaryKeySelective(sr);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000,
-            rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED)
     public ResultVO insertOrUpdate(SpRole record, Integer inOrUpType) {
         //如果类型是1就插入,其他的就更新
         if (inOrUpType == 1) {
-            record.setPsIds(",0");
             spRoleDAO.insert(record);
         } else {
             spRoleDAO.updateByPrimaryKeySelective(record);

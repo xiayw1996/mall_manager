@@ -1,5 +1,6 @@
 package com.hd.mall_manager.service;
 
+import com.hd.mall_manager.bean.Constant;
 import com.hd.mall_manager.bean.PageData;
 import com.hd.mall_manager.bean.ResultCode;
 import com.hd.mall_manager.bean.ResultVO;
@@ -55,24 +56,43 @@ public class SpManagerService{
     }
 
 
+    /**
+     * 分页查询
+     * @param pageData      分页组件
+     * @param query         查询条件
+     * @return
+     */
     public PageData selectToPage(PageData pageData, String query){
         pageData.setRecordsTotal(spManagerDAO.selectToPageTotal(query));
         pageData.setPageData(spManagerDAO.selectToPageList(pageData, query));
         return pageData;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000,
-            rollbackFor = Exception.class)
+    /**
+     * 插入或删除
+     * @param record        实体类
+     * @param inOrUpType    插入或更新类型  1.插入  2.更新
+     * @return
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     public ResultVO insertOrUpdate(SpManager record, Integer inOrUpType) {
+        //插入
         if (inOrUpType == 1) {
+            //设置时间戳
             record.setMgTime((int) (new Date().getTime() / 1000));
-            record.setRoleId((byte) 30);
+            //设置角色,默认30(管理员)
+            record.setRoleId(Constant.roleId.byteValue());
+            //插入记录
             spManagerDAO.insert(record);
         } else {
+            //更新记录
             spManagerDAO.updateByPrimaryKeySelective(record);
         }
+        //根据名称检测这个名称的总数
         Integer recordCount = spManagerDAO.checkUserName(record.getMgName());
+        //如果总数大于1，那么说明有名称重复
         if (recordCount > 1) {
+            //抛出异常，并回滚记录
             throw ResultCode.accountDuplicateException.getDE();
         }
         return new ResultVO();

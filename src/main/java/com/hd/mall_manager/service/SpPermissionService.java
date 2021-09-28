@@ -46,11 +46,17 @@ public class SpPermissionService{
     }
 
 
+    /**
+     * 根据类型查询所有记录
+     * @param type 类型：0.普通列表 1.树形结构列表
+     * @return
+     */
     public Object selectAll(Integer type){
         //如果type == 0就是普通列表，否责就是树形结构
         if(type == 0){
             return spPermissionDAO.selectAll();
-        } else {
+        } else if (type == 1) {
+            /*
             JSONArray ja = new JSONArray();
             List<SpPermission> spList = spPermissionDAO.selectRightAll((short) 0,"0");
             for(SpPermission sp : spList){
@@ -85,8 +91,29 @@ public class SpPermissionService{
                 jo1.put("children",ja1);
                 ja.add(jo1);
             }
-            return ja;
+             */
+            return menuChild((short)0,"0");
+        } else {
+            return menuChild((short)0,"0");
         }
     }
+
+    //另一种递归写法
+    public JSONArray menuChild(Short psId, String psLevel) {
+        JSONArray ja = new JSONArray();
+        List<SpPermission> spList = spPermissionDAO.selectRightAll(psId,psLevel);
+        for(SpPermission sp : spList) {
+            JSONArray ja1 = menuChild(sp.getPsId(), Integer.parseInt(psLevel)+1+"");
+            JSONObject jo = new JSONObject();
+            jo.put("id",sp.getPsId());
+            jo.put("authName",sp.getPsName());
+            jo.put("path",null);
+            jo.put("pid",sp.getPsPid());
+            jo.put("children",ja1);
+            ja.add(jo);
+        }
+        return ja;
+    }
+
 
 }

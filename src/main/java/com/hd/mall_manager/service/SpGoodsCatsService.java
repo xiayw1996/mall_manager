@@ -44,6 +44,10 @@ public class SpGoodsCatsService{
     }
 
 
+    /**
+     * 查询所有记录
+     * @return
+     */
     public List<SpGoodsCats> selectAll(){
         return spGoodsCatsDAO.selectAll();
     }

@@ -1,6 +1,6 @@
 package com.hd.mall_manager.service;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+import com.hd.mall_manager.util.FileUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -9,10 +9,6 @@ import com.hd.mall_manager.dao.SpImageManagerDAO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -60,12 +56,20 @@ public class SpImageManagerService{
     }
 
 
+    /**
+     * 查询所有记录
+     * @return
+     */
     public List<SpImageManager> selectAll() {
         return spImageManagerDAO.selectAll();
     }
 
+    /**
+     * 图片上传
+     * @param userId    用户id
+     * @param file      文件
+     */
     public void upload(Integer userId, MultipartFile file) {
-        SafePathCheck(uploadPath);
         //文件本来的名称
         String fileName = file.getOriginalFilename();
         //截取文件的后缀
@@ -75,40 +79,38 @@ public class SpImageManagerService{
         //本地文件路径
         String filePath = uploadPath + "/" + newFileName;
         //图片预览的url
-        String fileUrl = mallServerUrl + "/sim/photo/" + newFileName;
-        //根据文件路径,获取完整的文件路径
-        Path path = Paths.get(filePath);
-        try {
-            //根据路径创建文件
-            file.transferTo(Files.createFile(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String fileUrl = mallServerUrl + "/" + filePath;
 
+
+        FileUtil fileUtil = new FileUtil();
+        //检测文件路径
+        fileUtil.safePathCheck(uploadPath);
+        //根据路径创建文件
+        fileUtil.createFileByPath(file, filePath);
+
+        //将数据放进图片实体类中
         SpImageManager sim = new SpImageManager();
         sim.setFileName(newFileName);
         sim.setFilePath(fileUrl);
         sim.setUploadUserId(userId);
         sim.setCreateTime(LocalDateTime.now());
-        //更新用户头像
+        //插入记录
         spImageManagerDAO.insert(sim);
     }
 
-    /**
-     * 假如目录不存在，则新建
-     * @param file
-     * @return
-     */
-    public static String SafePathCheck(String file) {
-        File dic = new File(file);
-        if (!dic.exists()) {
-            try {
-                FileUtils.forceMkdir(dic);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public int delete(Integer id) {
+        SpImageManager sim = spImageManagerDAO.selectByPrimaryKey(id);
+        if (sim == null) {
+            return 0;
         }
-        return file;
+        //先根据图片路径获取图片
+        String filePath = uploadPath + "/" + sim.getFileName();
+        File file = new File(filePath);
+        //如果图片不为空,就删除本地图片
+        if (file.isFile() && file.exists()) {
+            file.delete();
+        }
+        return spImageManagerDAO.deleteByPrimaryKey(id);
     }
 
 }

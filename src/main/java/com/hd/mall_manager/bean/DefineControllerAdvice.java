@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
@@ -15,9 +16,10 @@ public class DefineControllerAdvice {
 	@ResponseBody
 	@ExceptionHandler(value = Exception.class)
 	public Map<String, Object> errorHandler(Exception ex) {
-		Map<String, Object> map = Constant.BaseResultMap(null);
+		Map<String, Object> map = new HashMap<>();
 		map.put("code", 1);
 		map.put("msg", ex.toString());
+		map.put("data", null);
 		logger.error("未捕获的异常", ex);
 		return map;
 	}
@@ -30,9 +32,10 @@ public class DefineControllerAdvice {
 	@ResponseBody
 	@ExceptionHandler(value = DefineException.class)
 	public Map<String, Object> myErrorHandler(DefineException ex) {
-		Map<String, Object> map = Constant.BaseResultMap(null);
+		Map<String, Object> map = new HashMap<>();
 		map.put("code", ex.getCode());
 		map.put("msg", ex.getMsg());
+		map.put("data", null);
 		return map;
 	}
 
