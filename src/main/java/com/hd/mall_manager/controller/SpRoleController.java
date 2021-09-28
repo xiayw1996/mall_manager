@@ -36,7 +36,7 @@ public class SpRoleController {
     @RequestMapping("/deleteRoleRight")
     public ResultVO deleteRoleRight(Short roleId,Short psId){
         //如果当前id是30（管理员）角色
-        if (roleId == Constant.roleId) {
+        if (Constant.roleId.equals(roleId)) {
             return new ResultVO(ResultCode.adminOperationRoleException);
         }
         return spRoleService.deleteRoleRight(roleId,psId);
@@ -51,7 +51,7 @@ public class SpRoleController {
     @RequestMapping("/updateRoleRight")
     public ResultVO updateRoleRight(Short roleId, @RequestParam(name = "psIds",required = false) List<Short> psIds){
         //如果当前id是30（管理员）角色
-        if (roleId == Constant.roleId) {
+        if (Constant.roleId.equals(roleId)) {
             return new ResultVO(ResultCode.adminOperationRoleException);
         }
         return new ResultVO(spRoleService.updateRoleRight(roleId,psIds));
@@ -71,7 +71,7 @@ public class SpRoleController {
             return new ResultVO(ResultCode.paramNullException);
         }
         //如果当前id是30（管理员）角色
-        if (record.getRoleId() == Constant.roleId) {
+        if (Constant.roleId.equals(record.getRoleId())) {
             return new ResultVO(ResultCode.adminOperationRoleException);
         }
         return spRoleService.insertOrUpdate(record, 2);
@@ -80,7 +80,7 @@ public class SpRoleController {
     @RequestMapping("/delete")
     public ResultVO delete(Short roleId){
         //如果当前id是30（管理员）角色
-        if (roleId == Constant.roleId) {
+        if (Constant.roleId.equals(roleId)) {
             return new ResultVO(ResultCode.adminOperationRoleException);
         }
         return spRoleService.delete(roleId);

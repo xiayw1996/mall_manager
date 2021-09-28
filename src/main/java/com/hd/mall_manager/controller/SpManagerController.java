@@ -51,7 +51,7 @@ public class SpManagerController {
     @RequestMapping("/update")
     public ResultVO update(@RequestBody SpManager record){
         //如果当前id是500（管理员）
-        if (record.getMgId() == Constant.mgId) {
+        if (Constant.mgId.equals(record.getMgId())) {
             return new ResultVO(ResultCode.adminOperationException);
         }
         return spManagerService.insertOrUpdate(record,2);
@@ -65,7 +65,7 @@ public class SpManagerController {
     @RequestMapping("/delete")
     public ResultVO insert(Integer mgId){
         //如果当前id是500（管理员）
-        if (mgId == Constant.mgId) {
+        if (Constant.mgId.equals(mgId)) {
             return new ResultVO(ResultCode.adminOperationException);
         }
         return new ResultVO(spManagerService.deleteByPrimaryKey(mgId));
